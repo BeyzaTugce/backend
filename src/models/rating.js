@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
- 
-const ratingSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const RatingSchema = mongoose.Schema({
     rating: Number,
     ratingComment: String
 });
- 
-const Rating = mongoose.model('Rating', ratingSchema);
- 
-export default Rating;
+
+module.exports = mongoose.model("Rating", RatingSchema);
+

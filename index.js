@@ -1,20 +1,34 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
+"use strict";
 
-const app = express();
+const http = require("http");
+const mongoose = require("mongoose");
 
-app.use(express.json({ limit: "30mb", extended: true}));
-app.use(express.json({ limit: "30mb", extended: true}));
-app.use(cors());
+const api = require("./src/api");
+const config = require("./src/config");
 
-// password shouldn't be here, temporary
-const CONNECTION_URL = "mongodb+srv://team_03:hejYg2CEeKJ08XH9@team03.tqhf8.mongodb.net/MyGarage?retryWrites=true&w=majority"
-const PORT = process.env.PORT || 5000;
 
-// useNewUrlParser and useUnifiedTopology not required but prevent some warnings
-mongoose.connect(CONNECTION_URL, { useNewUrlParser:true, useUnifiedTopology:true }) 
-    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-    .catch((error) => console.log(error.message));
-// this is also for warnings
-mongoose.set('useFindAndModify', false);
+// Set the port to the API.
+api.set('port', config.port);
+
+//Create a http server based on Express
+const server = http.createServer(api);
+
+
+//Connect to the MongoDB database; then start the server
+mongoose
+    .connect(config.mongoURI)
+    .then(() => server.listen(config.port))
+    .catch(err => {
+        console.log('Error connecting to the database', err.message);
+        process.exit(err.statusCode);
+    });
+
+
+server.on('listening', () => {
+    console.log(`API is running in port ${config.port}`);
+});
+
+server.on('error', (err) => {
+    console.log('Error in the server', err.message);
+    process.exit(err.statusCode);
+});

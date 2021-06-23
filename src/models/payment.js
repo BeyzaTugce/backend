@@ -1,13 +1,14 @@
-import mongoose from 'mongoose';
- 
-const paymentSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const PaymentSchema = mongoose.Schema({
     paid: Date,
     total: Number,
     details: String,
     approved: Boolean,
     transferred: Boolean
 });
- 
-const Payment = mongoose.model('Payment', paymentSchema);
- 
-export default Payment;
+
+module.exports = mongoose.model("Payment", PaymentSchema);
+

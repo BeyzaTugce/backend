@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
- 
-const shipmentSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const ShipmentSchema = mongoose.Schema({
     shippingId: Number,
     shippingType: String
 });
- 
-const Shipment = mongoose.model('Pickup', shipmentSchema);
- 
-export default Shipment;
+
+module.exports = mongoose.model("Shipment", ShipmentSchema);

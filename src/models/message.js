@@ -1,9 +1,10 @@
-import mongoose from 'mongoose';
- 
-const messageSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const MessageSchema = mongoose.Schema({
     message: String
 });
- 
-const Message = mongoose.model('Message', messageSchema);
- 
-export default Message;
+
+module.exports = mongoose.model("Message", MessageSchema);
+

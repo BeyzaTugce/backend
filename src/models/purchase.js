@@ -1,6 +1,8 @@
-import mongoose from 'mongoose';
- 
-const purchaseSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const PurchaseSchema = mongoose.Schema({
     created: Date,
     dateAdded: Date,
     garageId: String,
@@ -11,7 +13,5 @@ const purchaseSchema = mongoose.Schema({
         default: "WaitForAcceptance"
     }
 });
- 
-const Purchase = mongoose.model('Payment', purchaseSchema);
- 
-export default Purchase;
+
+module.exports = mongoose.model("Product", PurchaseSchema);

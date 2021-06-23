@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
- 
-const pickupSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const PickupSchema = mongoose.Schema({
     availableDates: [Date],
     pickupLocation: String
 });
- 
-const Pickup = mongoose.model('Pickup', pickupSchema);
- 
-export default Pickup;
+
+module.exports = mongoose.model("Pickup", PickupSchema);
+

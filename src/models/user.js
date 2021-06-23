@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ["LoggedIn", "Idle", "LoggedOut"],
     },
-    registerDate: DateTime,
+    registerDate: Date,
     role: {
         type: String,
         enum: ["Customer", "Admin"],

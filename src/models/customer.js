@@ -1,6 +1,8 @@
-import mongoose from 'mongoose';
- 
-const customerSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const CustomerSchema = mongoose.Schema({
     name: String,
     correspondanceAddress: String,
     billingAddress: String,
@@ -17,7 +19,5 @@ const customerSchema = mongoose.Schema({
         default: 0
     }
 });
- 
-const Customer = mongoose.model('Customer', customerSchema);
- 
-export default Customer;
+
+module.exports = mongoose.model("Customer", CustomerSchema);

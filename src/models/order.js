@@ -1,6 +1,8 @@
-import mongoose from 'mongoose';
- 
-const orderSchema = mongoose.Schema({
+"use strict";
+
+const mongoose = require("mongoose");
+
+const OrderSchema = mongoose.Schema({
     ordered: Date,
     shipped: Date,
     ship_to: String,
@@ -9,9 +11,7 @@ const orderSchema = mongoose.Schema({
         default: "New"
     },
     total: Number,
-    brokerageFee: Number
+    brokerageFee: Number,
 });
- 
-const Order = mongoose.model('Order', orderSchema);
- 
-export default Order;
+
+module.exports = mongoose.model("Order", OrderSchema);
