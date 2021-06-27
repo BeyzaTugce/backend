@@ -16,7 +16,7 @@ const CustomerSchema = mongoose.Schema({
     birthday: Date,
     avgRating: {
         type: Number,
-        default: 0
+        default: 0,
     }
 });
 

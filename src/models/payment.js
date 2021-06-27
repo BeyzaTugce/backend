@@ -7,7 +7,7 @@ const PaymentSchema = mongoose.Schema({
     total: Number,
     details: String,
     approved: Boolean,
-    transferred: Boolean
+    transferred: Boolean,
 });
 
 module.exports = mongoose.model("Payment", PaymentSchema);

@@ -10,7 +10,7 @@ const PurchaseSchema = mongoose.Schema({
     price: Number,
     enum_purchase: {
         type: ["WaitForAcceptance", "DeliveryScheduling", "Payment", "Rating", "Closed"],
-        default: "WaitForAcceptance"
+        default: "WaitForAcceptance",
     }
 });
 

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const PickupSchema = mongoose.Schema({
     availableDates: [Date],
-    pickupLocation: String
+    pickupLocation: String,
 });
 
 module.exports = mongoose.model("Pickup", PickupSchema);
