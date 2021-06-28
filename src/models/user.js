@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
     loginStatus: {
         type: String,
         enum: ["LoggedIn", "Idle", "LoggedOut"],
+        default: "LoggedOut",
     },
     registerDate: Date,
     role: {

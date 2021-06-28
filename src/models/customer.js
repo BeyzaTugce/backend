@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const CustomerSchema = mongoose.Schema({
     name: String,
+    surname: String,
     correspondanceAddress: String,
     billingAddress: String,
     phone: String,
