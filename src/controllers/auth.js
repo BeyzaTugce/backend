@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 
 const config = require("../config");
 const UserModel = require("../models/user");
-const AdminModel = require("../models/admin");
 
 const login = async (req, res) => {
     // check if the body of the request contains all necessary properties
@@ -64,11 +63,42 @@ const register = async (req, res) => {
             message: "The request body must contain a password property",
         });
 
-    if (!Object.prototype.hasOwnProperty.call(req.body, "email"))
+    if (!Object.prototype.hasOwnProperty.call(req.body, "username"))
+        return res.status(400).json({
+            error: "Bad Request",
+            message: "The request body must contain a username property",
+        });
+        if (!Object.prototype.hasOwnProperty.call(req.body, "email"))
         return res.status(400).json({
             error: "Bad Request",
             message: "The request body must contain a email property",
         });
+        if (!Object.prototype.hasOwnProperty.call(req.body, "firstname"))
+        return res.status(400).json({
+            error: "Bad Request",
+            message: "The request body must contain a firstname property",
+        });
+        if (!Object.prototype.hasOwnProperty.call(req.body, "surname"))
+        return res.status(400).json({
+            error: "Bad Request",
+            message: "The request body must contain a surname property",
+        });
+        if (!Object.prototype.hasOwnProperty.call(req.body, "phone"))
+        return res.status(400).json({
+            error: "Bad Request",
+            message: "The request body must contain a phone property",
+        });
+        if (!Object.prototype.hasOwnProperty.call(req.body, "birthdate"))
+        return res.status(400).json({
+            error: "Bad Request",
+            message: "The request body must contain a birthdate property",
+        });
+        if (!Object.prototype.hasOwnProperty.call(req.body, "registeredDate"))
+        return res.status(400).json({
+            error: "Bad Request",
+            message: "The request body must contain a registeredDate property",
+        });
+
 
     // handle the request
     try {
@@ -76,20 +106,28 @@ const register = async (req, res) => {
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         // create a user object
-        const admin = {
-            email: req.body.email,
+        const user = {
+            username: req.body.username,
             password: hashedPassword,
+            email:req.body.email, 
+            firstname:req.body.firstname,
+             surname: req.body.surname, 
+              phone: req.body.phone, 
+              birthdate: req.body.birthdate,
+              registeredDate: req.body.registeredDate,
         };
 
+
         // create the user in the database
-        let retAdmin = await AdminModel.create(admin);
+        let retUser = await UserModel.create(user);
 
         // if user is registered without errors
         // create a token
         const token = jwt.sign(
             {
-                _id: retAdmin._id,
-                email: retAdmin.admin,
+                _id: retUser._id,
+                username: retUser.username,
+                role: retUser.role,
             },
             config.JwtSecret,
             {
@@ -104,7 +142,7 @@ const register = async (req, res) => {
     } catch (err) {
         if (err.code == 11000) {
             return res.status(400).json({
-                error: "Admin exists",
+                error: "User exists",
                 message: err.message,
             });
         } else {

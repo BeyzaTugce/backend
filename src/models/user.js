@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true,
@@ -28,6 +28,22 @@ const UserSchema = new mongoose.Schema({
         enum: ["Customer", "Admin"],
         default: "Customer",
     },
+    firstname: String,
+    surname: String,
+    correspondanceAddress: String,
+    billingAddress: String,
+    phone: String,
+    creditCardInfo: String,
+    balance: {
+        type: Number,
+        default: 0
+    },
+    gender: String,
+    birthday: Date,
+    avgRating: {
+        type: Number,
+        default: 0,
+    }
 });
 
 UserSchema.set("versionKey", false);
