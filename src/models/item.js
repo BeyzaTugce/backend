@@ -10,11 +10,16 @@ const ItemSchema = new mongoose.Schema({
     info: {
         type: String
     },
-    tag: Array[String],
+    tags: Array[String],
     price: {
         type: Number,
         required: true,
-    }
+    },
+    image: {
+        type: Buffer,
+        contentType: String,
+        required: true
+    },
 });
 
 module.exports = mongoose.model("Item", ItemSchema);

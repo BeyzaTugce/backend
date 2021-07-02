@@ -8,6 +8,7 @@ const middlewares = require("./middlewares");
 
 const auth  = require("./routes/auth");
 const garage  = require("./routes/garage");
+const item  = require("./routes/item");
 
 
 const api = express();
@@ -29,6 +30,7 @@ api.get('/', (req, res) => {
 // API routes
 api.use('/auth', auth);
 api.use('/garage', garage);
+api.use('/item', item);
 
 
 module.exports = api;

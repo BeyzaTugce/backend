@@ -3,15 +3,15 @@
 const express = require("express");
 const router = express.Router();
 
-const authController = require("../controllers/garage");
+const itemController = require("../controllers/Item");
 const middlewares = require("../middlewares");
 
 
-router.post("/createGarage", authController.createGarage); // create a garage
-router.post("/readGarage", authController.readGarage); // read a garage
-router.post("/updateGarage", authController.updateGarage); // update a garage
-router.post("/removeGarage", authController.removeGarage); // remove a garage
-router.post("/listGarages", authController.listGarages); // list garages
+router.post("/createItem", itemController.createItem); // create a Item
+router.post("/readItem", itemController.readItem); // read a Item
+router.post("/updateItem", itemController.updateItem); // update a Item
+router.post("/removeItem", itemController.removeItem); // remove a Item
+router.post("/listItems", itemController.listItems); // list Items
 
 
 module.exports = router;
