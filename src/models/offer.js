@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const OfferSchema = new mongoose.Schema({
     name: String,
-    bargainOffer: Array[Number],
+    bargainOffer: [Number],
     price: {
         type: Number,
         required: true,

@@ -10,7 +10,9 @@ const ItemSchema = new mongoose.Schema({
     info: {
         type: String
     },
-    tags: Array[String],
+    tags: {
+        type: [String]
+    },
     price: {
         type: Number,
         required: true,
