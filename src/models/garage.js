@@ -2,9 +2,10 @@
 
 const mongoose = require("mongoose");
 
+
 const GarageSchema = new mongoose.Schema({
-    created: {
-        type: DateTime,
+    dateCreated: {
+        type: Date,
         required: true,
     },
     isPromoted: {
@@ -23,7 +24,10 @@ const GarageSchema = new mongoose.Schema({
         type: String,
         enum: ["PickUp", "Shipment"],
     },
-    
+    items: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item'
+    }],
 });
 
 module.exports = mongoose.model("Garage", GarageSchema);
