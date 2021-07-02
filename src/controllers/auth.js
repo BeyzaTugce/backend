@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const config = require("../config");
 const UserModel = require("../models/user");
+const AdminModel = require("../models/admin");
 
 const login = async (req, res) => {
     // check if the body of the request contains all necessary properties
@@ -63,10 +64,10 @@ const register = async (req, res) => {
             message: "The request body must contain a password property",
         });
 
-    if (!Object.prototype.hasOwnProperty.call(req.body, "username"))
+    if (!Object.prototype.hasOwnProperty.call(req.body, "email"))
         return res.status(400).json({
             error: "Bad Request",
-            message: "The request body must contain a username property",
+            message: "The request body must contain a email property",
         });
 
     // handle the request
@@ -75,22 +76,20 @@ const register = async (req, res) => {
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         // create a user object
-        const user = {
-            username: req.body.username,
+        const admin = {
+            email: req.body.email,
             password: hashedPassword,
-            role: req.body.isAdmin ? "admin" : "member",
         };
 
         // create the user in the database
-        let retUser = await UserModel.create(user);
+        let retAdmin = await AdminModel.create(admin);
 
         // if user is registered without errors
         // create a token
         const token = jwt.sign(
             {
-                _id: retUser._id,
-                username: retUser.username,
-                role: retUser.role,
+                _id: retAdmin._id,
+                email: retAdmin.admin,
             },
             config.JwtSecret,
             {
@@ -105,7 +104,7 @@ const register = async (req, res) => {
     } catch (err) {
         if (err.code == 11000) {
             return res.status(400).json({
-                error: "User exists",
+                error: "Admin exists",
                 message: err.message,
             });
         } else {
