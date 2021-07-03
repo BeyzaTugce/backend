@@ -14,17 +14,17 @@ const login = async (req, res) => {
       message: "The request body must contain a password property",
     });
 
-  if (!Object.prototype.hasOwnProperty.call(req.body, "username"))
+  if (!Object.prototype.hasOwnProperty.call(req.body, "email"))
     return res.status(400).json({
       error: "Bad Request",
-      message: "The request body must contain a username property",
+      message: "The request body must contain a email property",
     });
 
   // handle the request
   try {
     // get the user form the database
     let user = await UserModel.findOne({
-      username: req.body.username,
+      email: req.body.email,
     }).exec();
 
     // check if the password is valid
@@ -37,7 +37,7 @@ const login = async (req, res) => {
     // if user is found and password is valid
     // create a token
     const token = jwt.sign(
-      { _id: user._id, username: user.username, role: user.role },
+      { _id: user._id, email: user.email, role: user.role },
       config.JwtSecret,
       {
         expiresIn: 86400, // expires in 24 hours
