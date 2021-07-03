@@ -3,7 +3,9 @@
 const mongoose = require("mongoose");
 
 const OfferSchema = new mongoose.Schema({
-    name: String,
+    bargainId: String,
+    senderUserName: String,
+    receiverUserName: String,
     bargainOffer: [Number],
     price: {
         type: Number,

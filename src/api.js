@@ -10,6 +10,7 @@ const auth  = require("./routes/auth");
 const garage  = require("./routes/garage");
 const item  = require("./routes/item");
 const user = require("./routes/user");
+const bargain = require("./routes/bargain");
 
 
 const api = express();
@@ -33,6 +34,7 @@ api.use('/auth', auth);
 api.use('/garage', garage);
 api.use('/item', item);
 api.use('/user', user);
+api.use('/bargain', bargain);
 
 
 module.exports = api;
