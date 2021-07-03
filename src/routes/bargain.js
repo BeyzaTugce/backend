@@ -7,8 +7,8 @@ const bargainController = require("../controllers/bargain");
 const middlewares = require("../middlewares");
 
 router.post("/:id", bargainController.createBargainOffer);
-router.get("/", bargainController.getOfferHistory);
-//router.post("/", bargainController.updateBargainOffer);
+router.get("/:id", bargainController.getOfferHistory);
+router.delete("/:id", bargainController.withdrawBargainOffer);
 
 
 module.exports = router;
