@@ -52,7 +52,12 @@ const createBargainOffer = async (req, res) => {
             newOffer.save().then(offer => res.json(offer));
         }
         else {
-            await OfferModel.findOneAndUpdate({"$push": { "bargainOffer": req.body.price }})
+            let price = req.body.price;
+            const filter = {"bargainId": req.params.id }
+            const update = {
+                "price": price,
+                "$push": { "bargainOffer": price }}
+            await OfferModel.findOneAndUpdate(filter, update)
         }
         return res.status(201).json(offer);
     } catch (err) {
