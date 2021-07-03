@@ -3,9 +3,9 @@
 const mongoose = require("mongoose");
 
 const ItemSchema = new mongoose.Schema({
-    garage_id: {
+    garageId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Garage'
+        ref: "Garage"
     },
     name: {
         type: String,

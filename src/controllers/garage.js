@@ -20,7 +20,7 @@ const createGarage = async (req, res) => {
             message: err.message,
         });
     }
-}
+};
 
 const readGarage = async (req, res) => {
     try {
@@ -102,7 +102,45 @@ const listGarages = async (req, res) => {
             message: err.message,
         });
     }
-}
+};
+
+const getItems = async (req, res) => {
+    try {
+        let garage = await GarageModel.findById(req.params.id);
+        let items = garage.items;
+        return res.status(200).json({ items: items });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
+const addItem = async (req, res) => {
+    try {
+        let garageId = req.params.id;
+
+        let itemObject = {
+            garageId: garageId,
+            name: req.params.name,
+            info: req.params.info,
+            tags: req.params.tags,
+            price: req.params.price,
+            image: req.params.image,
+        };
+        await GarageModel.findByIdAndUpdate(garageId, {
+            $push: { items: itemObject },
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
 
 
 module.exports = {
@@ -111,4 +149,6 @@ module.exports = {
     updateGarage,
     removeGarage,
     listGarages,
+    getItems,
+    addItem,
 };

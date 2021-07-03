@@ -26,7 +26,7 @@ const GarageSchema = new mongoose.Schema({
     },
     items: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Item'
+        ref: "Item"
     }],
 });
 
