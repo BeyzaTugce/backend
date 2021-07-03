@@ -3,6 +3,10 @@
 const mongoose = require("mongoose");
 
 const ItemSchema = new mongoose.Schema({
+    garage_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Garage'
+    },
     name: {
         type: String,
         required: true,
