@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 
 const ShipmentSchema = mongoose.Schema({
+    orderId: Number,
     shippingId: Number,
     shippingType: String
 });

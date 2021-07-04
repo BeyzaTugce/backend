@@ -11,6 +11,7 @@ const garage  = require("./routes/garage");
 const item  = require("./routes/item");
 const user = require("./routes/user");
 const bargain = require("./routes/bargain");
+const pickup = require("./routes/pickup");
 
 
 const api = express();
@@ -35,6 +36,7 @@ api.use('/garage', garage);
 api.use('/item', item);
 api.use('/user', user);
 api.use('/bargain', bargain);
+api.use('/pickup', pickup);
 
 
 module.exports = api;
