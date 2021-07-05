@@ -142,6 +142,20 @@ const addItem = async (req, res) => {
     }
 };
 
+const getUser = async (req, res) => {
+    try {
+        let garage = await GarageModel.findById(req.params.id);
+        let user = garage.user;
+        return res.status(200).json({ user: user });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
 
 module.exports = {
     createGarage,
@@ -151,4 +165,5 @@ module.exports = {
     listGarages,
     getItems,
     addItem,
+    getUser,
 };

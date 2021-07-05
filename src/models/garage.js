@@ -8,6 +8,10 @@ const GarageSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     isPromoted: {
         type: Boolean,
         default: false,
