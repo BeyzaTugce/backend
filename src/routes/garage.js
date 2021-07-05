@@ -13,7 +13,7 @@ router.post("/:id", garageController.updateGarage); // update a garage
 router.post("/:id", garageController.removeGarage); // remove a garage
 router.post("/", garageController.listGarages); // list garages
 router.post("/item/:id", garageController.getItems); //get items in a garage
-router.post("/user/:id", garageController.getUser); //get the user of the garage
-
+router.get("/user/:id", garageController.getUser); //get the user of the garage
+router.get("/:id", garageController.getGarage);
 
 module.exports = router;
