@@ -3,7 +3,10 @@
 const mongoose = require("mongoose");
 
 const PaymentSchema = mongoose.Schema({
-    paid: Date,
+    paid: {
+        type: Date,
+        default: Date.now
+    },
     total: Number,
     details: String,
     approved: Boolean,

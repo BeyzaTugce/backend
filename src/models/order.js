@@ -3,7 +3,10 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = mongoose.Schema({
-    ordered: Date,
+    ordered: {
+        type: Date,
+        default: Date.now
+    },
     shipped: Date,
     ship_to: String,
     enum: {
