@@ -6,7 +6,7 @@ const OfferSchema = new mongoose.Schema({
     bargainId: String,
     buyerUserName: String,
     sellerUserName: String,
-    bargainOffer: [Number],
+    offerHistory: [Number],
     price: {
         type: Number,
         required: true,

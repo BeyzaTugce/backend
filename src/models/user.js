@@ -22,7 +22,10 @@ const UserSchema = new mongoose.Schema({
         enum: ["LoggedIn", "Idle", "LoggedOut"],
         default: "LoggedOut",
     },
-    registerDate: Date,
+    registerDate: {
+        type: Date,
+        default: Date.now,
+    },
     role: {
         type: String,
         enum: ["Customer", "Admin"],
