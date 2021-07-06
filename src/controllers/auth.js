@@ -98,6 +98,16 @@ const register = async (req, res) => {
       error: "Bad Request",
       message: "The request body must contain a surname property",
     });
+    if (!Object.prototype.hasOwnProperty.call(req.body, "gender"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a gender property",
+    });
+    if (!Object.prototype.hasOwnProperty.call(req.body, "city"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a city property",
+    });
 
   // handle the request
   try {
@@ -106,14 +116,19 @@ const register = async (req, res) => {
 
     // create a user object
     const user = {
-      username: req.body.username,
-      password: hashedPassword,
       email: req.body.email,
-      firstname: req.body.firstname,
+      username: req.body.username,
+      firstname:req.body.firstname,
       surname: req.body.surname,
+      password: hashedPassword,
       phone: req.body.phone,
       birthdate: req.body.birthdate,
       registeredDate: req.body.registeredDate,
+      gender: req.body.gender,
+      district: req.body.district,
+      postcode: req.body.postcode,
+      city: req.body.city,
+      correspondenceAddress: req.body.correspondenceAddress,
     };
 
     // create the user in the database

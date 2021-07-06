@@ -34,15 +34,19 @@ const UserSchema = new mongoose.Schema({
     postcode: Number,
     district: String,
     city: String,
-    billingAddress: String,
+    billingAddress: {
+        type: String,
+        default: "" },
     phone: String,
-    creditCardInfo: String,
+    creditCardInfo:{
+        type: String,
+        default: "" },
     balance: {
         type: Number,
         default: 0
     },
     gender: String,
-    birthday: Date,
+    birthdate: Date,
     avgRating: {
         type: Number,
         default: 0,
