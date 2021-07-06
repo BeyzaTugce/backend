@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const GarageSchema = new mongoose.Schema({
     dateCreated: {
         type: Date,
+        default: Date.now,
         required: true,
     },
     user: {
