@@ -1,6 +1,7 @@
 "use strict";
 
 const GarageModel = require("../models/garage");
+const UserModel = require("../models/user");
 
 
 const createGarage = async (req, res) => {
@@ -144,11 +145,17 @@ const addItem = async (req, res) => {
     }
 };
 
-const getUser = async (req, res) => {
+const getSeller = async (req, res) => {
     try {
-        let garage = await GarageModel.findById(req.params.id);
-        let user = garage.user;
-        return res.status(200).json({ user: user });
+        
+       let garage = await GarageModel.findById(req.params.id);
+        let seller =await UserModel.findById(garage.user);
+        if (!seller)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Seller not found`,
+            });
+        return res.status(200).json(seller);
     } catch (err) {
         console.log(err);
         return res.status(500).json({
@@ -190,6 +197,6 @@ module.exports = {
     listGarages,
     getItems,
     addItem,
-    getUser,
+    getSeller,
     getGarage,
 };
