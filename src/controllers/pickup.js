@@ -75,7 +75,7 @@ const updatePickup = async (req, res) => {
     }
 };
 
-const removePickUp = async (req, res) => {
+const deletePickUp = async (req, res) => {
     try {
         // find and remove garage
         await PickUpModel.findByIdAndRemove(req.params.id).exec();
@@ -97,5 +97,5 @@ module.exports = {
     createPickUp,
     readPickUp,
     updatePickup,
-    removePickUp,
+    deletePickUp,
 };

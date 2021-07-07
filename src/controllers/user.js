@@ -55,7 +55,7 @@ const updateUser = async (req, res) => {
     }
 };
 
-const removeUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         // find and remove garage
         await UserModel.findByIdAndRemove(req.params.id).exec();
@@ -88,6 +88,6 @@ const listUsers = async (req, res) => {
 module.exports = {
     readUser,
     updateUser,
-    removeUser,
+    deleteUser,
     listUsers,
 };

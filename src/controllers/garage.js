@@ -25,14 +25,17 @@ const createGarage = async (req, res) => {
 
 const readGarage = async (req, res) => {
     try {
-        let garage = await GarageModel.findById(req.params.id).exec();
 
+        let garage = await GarageModel.findById(req.params.id);
+
+        // if no garage with id is found, return 404
         if (!garage)
             return res.status(404).json({
-                error: "Not Found",
-                message: `Garage not found`,
+                error: "No garage can found",
+                message: `garage not found`,
             });
 
+        // return gotten movie
         return res.status(200).json(garage);
     } catch (err) {
         console.log(err);
@@ -76,7 +79,7 @@ const updateGarage = async (req, res) => {
     }
 };
 
-const removeGarage = async (req, res) => {
+const deleteGarage = async (req, res) => {
     try {
         // find and remove garage
         
@@ -107,21 +110,8 @@ const listGarages = async (req, res) => {
     }
 };
 
-const getItems = async (req, res) => {
-    try {
-        let garage = await GarageModel.findById(req.params.id);
-        let items = garage.items;
-        return res.status(200).json({ items: items });
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({
-            error: "Internal server error",
-            message: err.message,
-        });
-    }
-};
 
-const addItem = async (req, res) => {
+const createItem = async (req, res) => {
     try {
         let garageId = req.params.id;
 
@@ -145,9 +135,22 @@ const addItem = async (req, res) => {
     }
 };
 
-const getSeller = async (req, res) => {
+const readItems = async (req, res) => {
     try {
-        
+        let garage = await GarageModel.findById(req.params.id);
+        let items = garage.items;
+        return res.status(200).json({ items: items });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
+const readSeller = async (req, res) => {
+    try {
        let garage = await GarageModel.findById(req.params.id);
         let seller =await UserModel.findById(garage.user);
         if (!seller)
@@ -165,38 +168,16 @@ const getSeller = async (req, res) => {
     }
 };
 
-const getGarage = async (req, res) => {
-    try {
 
-        let garage = await GarageModel.findById(req.params.id);
-  
-        // if no movie with id is found, return 404
-        if (!garage)
-            return res.status(404).json({
-                error: "No garage can found",
-                message: `Movie not found`,
-            });
-
-        // return gotten movie
-        return res.status(200).json(garage);
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({
-            error: "Internal Server Error",
-            message: err.message,
-        });
-    }
-};
 
 
 module.exports = {
     createGarage,
-    readGarage,
     updateGarage,
-    removeGarage,
+    deleteGarage,
     listGarages,
-    getItems,
-    addItem,
-    getSeller,
-    getGarage,
+    readItems,
+    createItem,
+    readSeller,
+    readGarage,
 };

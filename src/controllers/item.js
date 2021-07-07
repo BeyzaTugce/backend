@@ -75,7 +75,7 @@ const updateItem = async (req, res) => {
     }
 };
 
-const removeItem = async (req, res) => {
+const deleteItem = async (req, res) => {
     try {
         // find and remove item
         await ItemModel.findByIdAndRemove(req.params.id).exec();
@@ -109,6 +109,6 @@ module.exports = {
     createItem,
     readItem,
     updateItem,
-    removeItem,
+    deleteItem,
     listItems,
 };

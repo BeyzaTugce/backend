@@ -8,12 +8,12 @@ const middlewares = require("../middlewares");
 
 
 router.post("/", garageController.createGarage); // create a garage
-router.post("/:id", garageController.readGarage); // read a garage
 router.post("/:id", garageController.updateGarage); // update a garage
-router.post("/:id", garageController.removeGarage); // remove a garage
+router.post("/:id", garageController.deleteGarage); // remove a garage
 router.post("/", garageController.listGarages); // list garages
-router.post("/item/:id", garageController.getItems); //get items in a garage
-router.get("/seller/:id", garageController.getSeller); //get the user of the garage
-router.get("/:id", garageController.getGarage);
+router.post("/item", garageController.readItems); //get items in a garage
+router.post("/item", garageController.createItem); //add an item
+router.get("/seller/:id", garageController.readSeller); //get the user of the garage
+router.get("/:id", garageController.readGarage);
 
 module.exports = router;

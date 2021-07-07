@@ -17,7 +17,7 @@ router.delete(
     "/:id",
     middlewares.checkAuthentication,
     middlewares.checkIsAdmin,
-    userController.removeUser
+    userController.deleteUser
 ); // Delete a user by Id, needs logged in user with the admin role
 
 module.exports = router;
