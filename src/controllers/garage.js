@@ -2,7 +2,7 @@
 
 const GarageModel = require("../models/garage");
 const UserModel = require("../models/user");
-
+const ItemModel = require("../models/item");
 
 const createGarage = async (req, res) => {
     if (Object.keys(req.body).length === 0)
@@ -110,7 +110,7 @@ const listGarages = async (req, res) => {
     }
 };
 
-
+//TODO: Do not use that anymore instead use createItem in Item model
 const createItem = async (req, res) => {
     try {
         let garageId = req.params.id;
@@ -138,7 +138,15 @@ const createItem = async (req, res) => {
 const readItems = async (req, res) => {
     try {
         let garage = await GarageModel.findById(req.params.id);
-        let items = garage.items;
+        let items = await ItemModel.find({"garageId": garage.id}).exec();
+        console.log("GARAGE:"+garage);
+        console.log("ITEMS:"+items);
+        if (!items)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Item not found`,
+            });
+
         return res.status(200).json({ items: items });
     } catch (err) {
         console.log(err);
@@ -152,7 +160,7 @@ const readItems = async (req, res) => {
 const readSeller = async (req, res) => {
     try {
        let garage = await GarageModel.findById(req.params.id);
-        let seller =await UserModel.findById(garage.user);
+        let seller = await UserModel.findById(garage.user);
         if (!seller)
             return res.status(404).json({
                 error: "Not Found",

@@ -29,10 +29,6 @@ const GarageSchema = new mongoose.Schema({
         type: String,
         enum: ["PickUp", "Shipment"],
     },
-    items: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Item"
-    }],
 });
 
 module.exports = mongoose.model("Garage", GarageSchema);
