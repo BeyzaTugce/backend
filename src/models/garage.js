@@ -31,4 +31,5 @@ const GarageSchema = new mongoose.Schema({
     },
 });
 
+
 module.exports = mongoose.model("Garage", GarageSchema);

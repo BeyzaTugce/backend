@@ -141,6 +141,7 @@ const readItems = async (req, res) => {
         let items = await ItemModel.find({"garageId": garage.id}).exec();
         console.log("GARAGE:"+garage);
         console.log("ITEMS:"+items);
+
         if (!items)
             return res.status(404).json({
                 error: "Not Found",
