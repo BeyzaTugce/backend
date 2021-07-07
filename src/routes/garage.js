@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const garageController = require("../controllers/garage");
+const itemController = require("../controllers/item");
 const middlewares = require("../middlewares");
 
 

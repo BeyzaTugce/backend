@@ -123,9 +123,7 @@ const createItem = async (req, res) => {
             price: req.params.price,
             image: req.params.image,
         };
-        await GarageModel.findByIdAndUpdate(garageId, {
-            $push: { items: itemObject },
-        });
+        await ItemModel.create(itemObject);
     } catch (err) {
         console.log(err);
         return res.status(500).json({
