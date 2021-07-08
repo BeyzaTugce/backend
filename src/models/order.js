@@ -7,6 +7,9 @@ const OrderSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    method: {
+        type: ["Delivery", "Pick-Up"],
+    },
     shipped: Date,
     ship_to: String,
     enum: {
