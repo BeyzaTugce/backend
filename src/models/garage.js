@@ -25,10 +25,14 @@ const GarageSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    shipmentType: {
-        type: String,
-        enum: ["PickUp", "Shipment"],
+    pickup: {
+        type: Boolean,
+        default: false,
     },
+    shipment: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 
