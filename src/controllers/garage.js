@@ -175,6 +175,30 @@ const readSeller = async (req, res) => {
     }
 };
 
+const readGarageByUser = async (req, res) => {
+    try {
+        console.log(req.params.id);
+        let garage = await GarageModel.find({user : req.params.id});
+        console.log(garage);
+        console.log(user);
+
+
+        //let seller = await UserModel.findById(garage.user);
+        if (!garage)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Garage not found`,
+            });
+        return res.status(200).json(garage);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
 
 
 
@@ -187,4 +211,5 @@ module.exports = {
     createItem,
     readSeller,
     readGarage,
+    readGarageByUser,
 };

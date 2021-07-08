@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
         enum: ["Customer", "Admin"],
         default: "Customer",
     },
+    garageId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Garage",
+    },
     firstname: String,
     surname: String,
     correspondenceAddress: String,
