@@ -110,35 +110,11 @@ const listGarages = async (req, res) => {
     }
 };
 
-//TODO: Do not use that anymore instead use createItem in Item model
-const createItem = async (req, res) => {
-    try {
-        let garageId = req.params.id;
-
-        let itemObject = {
-            garageId: garageId,
-            name: req.params.name,
-            info: req.params.info,
-            tags: req.params.tags,
-            price: req.params.price,
-            image: req.params.image,
-        };
-        await ItemModel.create(itemObject);
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({
-            error: "Internal server error",
-            message: err.message,
-        });
-    }
-};
-
 const readItems = async (req, res) => {
     try {
         let garage = await GarageModel.findById(req.params.id);
         let items = await ItemModel.find({"garageId": garage.id}).exec();
-        console.log("GARAGE:"+garage);
-        console.log("ITEMS:"+items);
+        //console.log("ITEMS in controller:"+items);
 
         if (!items)
             return res.status(404).json({
@@ -208,7 +184,6 @@ module.exports = {
     deleteGarage,
     listGarages,
     readItems,
-    createItem,
     readSeller,
     readGarage,
     readGarageByUser,
