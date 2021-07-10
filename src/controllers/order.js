@@ -1,6 +1,8 @@
 "use strict";
 
 const OrderModel = require("../models/order");
+const UserModel = require("../models/user");
+const ItemModel = require("../models/item");
 
 
 const createOrder = async (req, res) => {
@@ -91,6 +93,84 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+const listOrders = async (req, res) => {
+    try{
+        let orders = await OrderModel.find({}).exec();
+        return res.status(200).json(orders);
+    } catch (err){
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
+const readItems = async (req, res) => {
+    try {
+        let order = await OrderModel.findById(req.params.id);
+        let items = await ItemModel.find({"orderId": order.id}).exec();
+        //console.log("ITEMS in controller:"+items);
+
+        if (!items)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Item not found`,
+            });
+
+        return res.status(200).json({ items: items });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
+const readSeller = async (req, res) => {
+    try {
+        let order = await OrderModel.findById(req.params.id);
+        let seller = await UserModel.findById(order.user);
+        if (!seller)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Seller not found`,
+            });
+        return res.status(200).json(seller);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
+const readOrderByUser = async (req, res) => {
+    try {
+        console.log(req.params.id);
+        let order = await OrderModel.find({user : req.params.id});
+        console.log(order);
+        console.log(user);
+
+
+        //let seller = await UserModel.findById(garage.user);
+        if (!order)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Garage not found`,
+            });
+        return res.status(200).json(order);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -98,4 +178,8 @@ module.exports = {
     readOrder,
     updateOrder,
     deleteOrder,
+    listOrders,
+    readItems,
+    readSeller,
+    readOrderByUser
 };
