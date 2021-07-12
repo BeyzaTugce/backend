@@ -8,7 +8,6 @@ const UserModel = require("./models/user");
 const AdminModel = require("./models/admin");
 const OrderModel = require("./models/order");
 
-
 const allowCrossDomain = (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
@@ -23,30 +22,21 @@ const allowCrossDomain = (req, res, next) => {
 };
 
 const checkAuthentication = (req, res, next) => {
-    // check header or url parameters or post parameters for token
-    let token = "";
-    if (req.headers.authorization) {
-        token = req.headers.authorization.split(" ")[1];
-    }
-
+    const token = req.header('x-auth-token');
+  
+    // Check for token
     if (!token)
-        return res.status(401).send({
-            error: "Unauthorized",
-            message: "No token provided in the request",
-        });
-
-    // verifies secret and checks exp
-    jwt.verify(token, config.JwtSecret, (err, decoded) => {
-        if (err)
-            return res.status(401).send({
-                error: "Unauthorized",
-                message: "Failed to authenticate token.",
-            });
-
-        // if everything is good, save to request for use in other routes
-        req.userId = decoded._id;
-        next();
-    });
+      return res.status(401).json({ msg: 'No token, authorization denied' });
+  
+    try {
+      // Verify token
+      const decoded = jwt.verify(token, config.JwtSecret);
+      // Add user from payload
+      req.user = decoded;
+      next();
+    } catch (e) {
+      res.status(400).json({ msg: 'Token is not valid' });
+    }
 };
 
 const checkIsAdmin = async (req, res, next) => {
@@ -78,5 +68,5 @@ module.exports = {
     allowCrossDomain,
     checkAuthentication,
     checkIsAdmin,
-    errorHandler,
+    errorHandler
 };
