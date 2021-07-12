@@ -10,14 +10,21 @@ const OrderSchema = new mongoose.Schema({
     method: {
         type: ["Delivery", "Pick-Up"],
     },
-    shipped: Date,
-    ship_to: String,
+    shipDate: Date,
+    pickUpDate: Date,
+    shipAddress: String,
+    pickUpAddress: String,
     enum: {
         type: ["New", "Hold", "Shipped", "Delivered", "Closed"],
         default: "New"
     },
     total: Number,
     brokerageFee: Number,
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+
 });
 
 module.exports = mongoose.model("Order", OrderSchema);
