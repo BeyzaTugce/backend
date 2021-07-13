@@ -7,62 +7,134 @@ const config = require("../config");
 const UserModel = require("../models/user");
 
 const login = async (req, res) => {
-
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
-  }
-  // handle the request
-    // get the user form the database
-  try {
-    const user = await UserModel.findOne({ email });
-    if (!user) throw Error('User does not exist');
-
-  // check if the password is valid
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw Error('Invalid credentials');
-     
-    const token = jwt.sign({ id: user._id }, config.JwtSecret, { expiresIn: 86400 });
-    if (!token) throw Error('Couldnt sign the token');
-
-    res.status(200).json({
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email
-      }
+  // check if the body of the request contains all necessary properties
+  if (!Object.prototype.hasOwnProperty.call(req.body, "password"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a password property",
     });
-    
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
+
+  if (!Object.prototype.hasOwnProperty.call(req.body, "email"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a email property",
+    });
+
+  // handle the request
+  try {
+    // get the user form the database
+    let user = await UserModel.findOne({
+      email: req.body.email,
+    }).exec();
+
+    // check if the password is valid
+    const isPasswordValid = bcrypt.compareSync(
+      req.body.password,
+      user.password
+    );
+    if (!isPasswordValid) return res.status(401).send({ token: null });
+
+    // if user is found and password is valid
+    // create a token
+    const token = jwt.sign(
+      { _id: user._id, email: user.email, 
+        role: user.role,
+        username: user.username,
+        firstname: user.firstname,
+        surname: user.surname,
+        phone: user.phone,
+        birthdate: user.birthdate,
+        registeredDate:user.registeredDate,
+        gender: user.gender,
+        district: user.district,
+        postcode: user.postcode,
+        city: user.city,
+        correspondenceAddress: user.correspondenceAddress,
+      
+      },
+      config.JwtSecret,
+      {
+        expiresIn: 86400, // expires in 24 hours
+      }
+    );
+
+    return res.status(200).json({
+      token: token,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      error: "User Not Found",
+      message: err.message,
+    });
   }
 };
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  // check if the body of the request contains all necessary properties
+  if (!Object.prototype.hasOwnProperty.call(req.body, "password"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a password property",
+    });
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
-  }
+  if (!Object.prototype.hasOwnProperty.call(req.body, "username"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a username property",
+    });
+  if (!Object.prototype.hasOwnProperty.call(req.body, "email"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a email property",
+    });
+  if (!Object.prototype.hasOwnProperty.call(req.body, "firstname"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a firstname property",
+    });
+  if (!Object.prototype.hasOwnProperty.call(req.body, "surname"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a surname property",
+    });
+  if (!Object.prototype.hasOwnProperty.call(req.body, "phone"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a phone property",
+    });
+  if (!Object.prototype.hasOwnProperty.call(req.body, "birthdate"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a birthdate property",
+    });
+  if (!Object.prototype.hasOwnProperty.call(req.body, "surname"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a surname property",
+    });
+    if (!Object.prototype.hasOwnProperty.call(req.body, "gender"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a gender property",
+    });
+    if (!Object.prototype.hasOwnProperty.call(req.body, "city"))
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "The request body must contain a city property",
+    });
 
+  // handle the request
   try {
-    const user = await UserModel.findOne({ email });
-    if (user) throw Error('User already exists');
+    // hash the password before storing it in the database
+    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
-    const salt = await bcrypt.genSalt(10);
-    if (!salt) throw Error('Something went wrong with bcrypt');
-
-    const hash = await bcrypt.hash(password, salt);
-    if (!hash) throw Error('Something went wrong hashing the password');
-
-    const newUser = new UserModel({
-      username,
-      email,
-      password: hash,
+    // create a user object
+    const user = {
+      email: req.body.email,
+      username: req.body.username,
       firstname:req.body.firstname,
       surname: req.body.surname,
+      password: hashedPassword,
       phone: req.body.phone,
       birthdate: req.body.birthdate,
       registeredDate: req.body.registeredDate,
@@ -71,45 +143,71 @@ const register = async (req, res) => {
       postcode: req.body.postcode,
       city: req.body.city,
       correspondenceAddress: req.body.correspondenceAddress,
-    });
+    };
 
-    const savedUser = await newUser.save();
-    if (!savedUser) throw Error('Something went wrong saving the user');
+    // create the user in the database
+    let retUser = await UserModel.create(user);
 
-    const token = jwt.sign({ id: savedUser._id }, config.JwtSecret, {
-      expiresIn: 86400
-    });
-
-    res.status(200).json({
-      token,
-      user: {
-        id: savedUser.id,
-        name: savedUser.name,
-        email: savedUser.email
+    // if user is registered without errors
+    // create a token
+    const token = jwt.sign(
+      {
+        _id: retUser._id,
+        username: retUser.username,
+        role: retUser.role,
+      },
+      config.JwtSecret,
+      {
+        expiresIn: 86400, // expires in 24 hours
       }
+    );
+
+    // return generated token
+    res.status(200).json({
+      token: token,
     });
-  } catch (e) {
-    res.status(400).json({ error: e.message });
+  } catch (err) {
+    if (err.code == 11000) {
+      return res.status(400).json({
+        error: "User exists",
+        message: err.message,
+      });
+    } else {
+      return res.status(500).json({
+        error: "Internal server error",
+        message: err.message,
+      });
+    }
   }
 };
 
 const me = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.user.id).select('-password');
-    if (!user) throw Error('User does not exist');
-    res.json(user);
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
+    // get own user name from database
+    let user = await UserModel.findById(req.userId).select("username").exec();
+
+    if (!user)
+      return res.status(404).json({
+        error: "Not Found",
+        message: `User not found`,
+      });
+
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message: err.message,
+    });
   }
 };
 
 const logout = (req, res) => {
-  res.status(200).json({ token: null });
+  res.status(200).send({ token: null });
 };
 
 module.exports = {
   login,
   register,
   logout,
-  me
+  me,
 };
