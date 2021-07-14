@@ -15,7 +15,7 @@ router.get("/", garageController.listGarages); // list garages
 router.get("/item/:id", garageController.readItems); //get items in a garage
 router.get("/seller/:id", garageController.readSeller); //get the user of the garage
 router.get("/:id", garageController.readGarage);
-router.get("/", garageController.readGarageByUser);
+router.get("/user", garageController.readGarageByUser);
 
 
 module.exports = router;

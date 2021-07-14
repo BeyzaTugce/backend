@@ -153,10 +153,10 @@ const readSeller = async (req, res) => {
 
 const readGarageByUser = async (req, res) => {
     try {
-        console.log(req.params.id);
-        let garage = await GarageModel.find({user : req.params.id});
+        let loggedInUser = await UserModel.findById(req.userId); //.select("garageId").exec();
+        let garage = await GarageModel.find({user : loggedInUser._id});
         console.log(garage);
-        console.log(user);
+        console.log(loggedInUser);
 
 
         //let seller = await UserModel.findById(garage.user);
