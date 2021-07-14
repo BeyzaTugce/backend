@@ -23,15 +23,25 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw Error('Invalid credentials');
      
-    const token = jwt.sign({ id: user._id }, config.JwtSecret, { expiresIn: 86400 });
-    if (!token) throw Error('Couldnt sign the token');
+    const token = jwt.sign({ id: user._id }, config.JwtSecret, { expiresIn: 3600 });
+    if (!token) 
+      throw Error('Couldnt sign the token');
 
     res.status(200).json({
       token,
       user: {
-        id: user.id,
+        id: user._id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        firstname:user.firstname,
+        surname: user.surname,
+        phone: user.phone,
+        birthdate: user.birthdate,
+        gender: user.gender,
+        district: user.district,
+        postcode: user.postcode,
+        city: user.city,
+        correspondenceAddress: user.correspondenceAddress,
       }
     });
     
@@ -75,16 +85,23 @@ const register = async (req, res) => {
     const savedUser = await newUser.save();
     if (!savedUser) throw Error('Something went wrong saving the user');
 
-    const token = jwt.sign({ id: savedUser._id }, config.JwtSecret, {
-      expiresIn: 86400
-    });
+    const token = jwt.sign({ id: savedUser._id }, config.JwtSecret, { expiresIn: 3600 });
 
     res.status(200).json({
       token,
       user: {
         id: savedUser.id,
-        name: savedUser.name,
-        email: savedUser.email
+        username: savedUser.username,
+        email: savedUser.email,
+        firstname:savedUser.firstname,
+        surname: savedUser.surname,
+        phone: savedUser.phone,
+        birthdate: savedUser.birthdate,
+        gender: savedUser.gender,
+        district: savedUser.district,
+        postcode: savedUser.postcode,
+        city: savedUser.city,
+        correspondenceAddress: savedUser.correspondenceAddress,
       }
     });
   } catch (e) {
@@ -92,7 +109,7 @@ const register = async (req, res) => {
   }
 };
 
-const me = async (req, res) => {
+const user = async (req, res) => {
   try {
     const user = await UserModel.findById(req.user.id).select('-password');
     if (!user) throw Error('User does not exist');
@@ -102,13 +119,13 @@ const me = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
-  res.status(200).json({ token: null });
-};
+// const logout = (req, res) => {
+//   res.status(200).json({ token: null });
+// };
 
 module.exports = {
   login,
   register,
-  logout,
-  me
+  // logout,
+  user
 };
