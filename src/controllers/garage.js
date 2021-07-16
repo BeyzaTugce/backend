@@ -34,8 +34,6 @@ const readGarage = async (req, res) => {
                 error: "No garage can found",
                 message: `garage not found`,
             });
-
-        // return gotten movie
         return res.status(200).json(garage);
     } catch (err) {
         console.log(err);
@@ -55,10 +53,7 @@ const updateGarage = async (req, res) => {
             message: "The request body is empty",
         });
     }
-
-    // handle the request
     try {
-        // find and update garage with id
         let garage = await GarageModel.findByIdAndUpdate(
             req.params.id,
             req.body,
@@ -67,8 +62,6 @@ const updateGarage = async (req, res) => {
                 runValidators: true,
             }
         ).exec();
-
-        // return updated movie
         return res.status(200).json(garage);
     } catch (err) {
         console.log(err);
@@ -81,10 +74,7 @@ const updateGarage = async (req, res) => {
 
 const deleteGarage = async (req, res) => {
     try {
-        // find and remove garage
-        
         await GarageModel.findByIdAndRemove(req.params.id).exec();
-        
         return res
             .status(200)
             .json({ message: `Garage with id${req.params.id} was deleted` });
@@ -100,7 +90,7 @@ const deleteGarage = async (req, res) => {
 const listGarages = async (req, res) => {
     try{
         let garages = await GarageModel.find({}).exec();
-        return res.status(200).json(garages);
+        return res.status(200).json({ garages: garages });
     } catch (err){
         console.log(err);
         return res.status(500).json({
