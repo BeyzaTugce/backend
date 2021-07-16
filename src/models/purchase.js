@@ -23,10 +23,10 @@ const PurchaseSchema = mongoose.Schema({
         type: ["WaitForAcceptance", "DeliveryScheduling", "Payment", "Rating", "Closed"],
         default: "WaitForAcceptance",
     },
-   /* selectedItemList: {
-            type: [Item],
+    selectedItemList: {
+            type: ["Item"],
             required: true,
-    }*/
+    }
 });
 
 module.exports = mongoose.model("Purchase", PurchaseSchema);
