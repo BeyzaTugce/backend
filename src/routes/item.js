@@ -12,6 +12,8 @@ router.get("/:id", itemController.readItem); // read a Item
 router.put("/:id", itemController.updateItem); // update a Item
 router.post("/:id", itemController.deleteItem); // remove a Item
 router.get("/", itemController.listItems); // list Items
+router.get('/search', itemController.search);
+router.post('/filter', itemController.filter);
 
 
 module.exports = router;
