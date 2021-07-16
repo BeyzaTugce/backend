@@ -12,7 +12,6 @@ const createPurchase = async (req, res) => {
 
     try{
         let purchase = await PurchaseModel.create(req.body);
-        console.log(req.body);
         return res.status(201).json(purchase);
     }catch (err){
         console.log(err);
@@ -92,6 +91,19 @@ const deletePurchase = async (req, res) => {
     }
 };
 
+const listPurchases = async (req, res) => {
+    try{
+        let purchases = await PurchaseModel.find({}).exec();
+        return res.status(200).json({ purchases: purchases });
+    } catch (err){
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -99,4 +111,5 @@ module.exports = {
     readPurchase,
     updatePurchase,
     deletePurchase,
+    listPurchases,
 };

@@ -9,6 +9,7 @@ const middlewares = require("../middlewares");
 
 router.post("/", purchaseController.createPurchase); // create a purchase
 router.get("/:id", purchaseController.readPurchase); // read a purchase
+router.get("/", purchaseController.listPurchases); // list garages
 
 
 module.exports = router;

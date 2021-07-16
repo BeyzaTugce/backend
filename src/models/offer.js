@@ -3,7 +3,10 @@
 const mongoose = require("mongoose");
 
 const OfferSchema = new mongoose.Schema({
-    bargainId: String,
+    purchaseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Purchase"
+    },
     offerHistory: {
         type: [Number],
         default: []
