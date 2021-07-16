@@ -17,11 +17,11 @@ const login = async (req, res) => {
     // get the user form the database
   try {
     const user = await UserModel.findOne({ email });
-    if (!user) throw Error('User does not exist');
+    if (!user) return res.status(400).json({ msg: 'User does not exists' });
 
   // check if the password is valid
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw Error('Invalid credentials');
+    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
      
     const token = jwt.sign({ id: user._id }, config.JwtSecret, { expiresIn: 3600 });
     if (!token) 
@@ -59,7 +59,10 @@ const register = async (req, res) => {
 
   try {
     const user = await UserModel.findOne({ email });
-    if (user) throw Error('User already exists');
+    if (user) return res.status(400).json({ msg: 'User already exists' });
+
+    const userNameTaken = await UserModel.findOne({ username });
+    if (userNameTaken) return res.status(400).json({ msg: 'Username already taken' });
 
     const salt = await bcrypt.genSalt(10);
     if (!salt) throw Error('Something went wrong with bcrypt');
