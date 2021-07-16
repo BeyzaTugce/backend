@@ -14,10 +14,11 @@ const createBargainOffer = async (req, res) => {
         if (!offer) {
             const newOffer = await new OfferModel({
                 bargainId: req.params.id,
-                sellerUserName: req.body.sellerUserName,
-                buyerUserName: req.body.buyerUserName,
+                seller: req.body.seller,
+                buyer: req.body.buyer,
                 price: req.body.price,
                 offerHistory: [req.body.price],
+                offerStatus: false,
             });
             newOffer.save().then(offer => res.json(offer));
         }

@@ -13,6 +13,7 @@ const user = require("./routes/user");
 const bargain = require("./routes/bargain");
 const pickup = require("./routes/pickup");
 const order= require("./routes/order");
+const purchase= require("./routes/purchase");
 
 
 const api = express();
@@ -39,6 +40,7 @@ api.use('/user', user);
 api.use('/bargain', bargain);
 api.use('/pickup', pickup);
 api.use('/order', order);
+api.use('/purchase', purchase);
 
 
 module.exports = api;

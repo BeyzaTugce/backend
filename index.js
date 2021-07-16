@@ -12,8 +12,8 @@ api.set('port', config.port);
 
 //Create a http server based on Express
 const server = http.createServer(api);
-
-mongoose.set('useFindAndModify', false);
+//TODO
+mongoose.set('useUnifiedTopology', true);
 //Connect to the MongoDB database; then start the server
 mongoose
     .connect(config.mongoURI)

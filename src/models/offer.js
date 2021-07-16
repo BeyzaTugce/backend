@@ -4,8 +4,6 @@ const mongoose = require("mongoose");
 
 const OfferSchema = new mongoose.Schema({
     bargainId: String,
-    buyerUserName: String,
-    sellerUserName: String,
     offerHistory: {
         type: [Number],
         default: []
@@ -13,7 +11,11 @@ const OfferSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
-    }
+    },
+    offerStatus:  {
+        type: Boolean,
+        default: false,
+    },
 });
 
 module.exports = mongoose.model("Offer", OfferSchema);

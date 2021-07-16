@@ -3,15 +3,30 @@
 const mongoose = require("mongoose");
 
 const PurchaseSchema = mongoose.Schema({
-    created: Date,
-    dateAdded: Date,
-    garageId: String,
-    enum_offer: ["Accepted", "Rejected", "NewOffer"],
+    creationDate: Date,
+    buyer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    //dateAdded: Date,
+    garageId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Garage"
+    },
+    //enum_offer: ["Accepted", "Rejected", "NewOffer"],
     price: Number,
-    enum_purchase: {
+    purchaseStatus: {
         type: ["WaitForAcceptance", "DeliveryScheduling", "Payment", "Rating", "Closed"],
         default: "WaitForAcceptance",
-    }
+    },
+   /* selectedItemList: {
+            type: [Item],
+            required: true,
+    }*/
 });
 
-module.exports = mongoose.model("Product", PurchaseSchema);
+module.exports = mongoose.model("Purchase", PurchaseSchema);

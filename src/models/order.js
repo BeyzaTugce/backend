@@ -20,11 +20,6 @@ const OrderSchema = new mongoose.Schema({
     },
     total: Number,
     brokerageFee: Number,
-    seller: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
-
 });
 
 module.exports = mongoose.model("Order", OrderSchema);
