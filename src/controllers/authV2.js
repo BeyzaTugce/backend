@@ -51,10 +51,10 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, firstname, surname, district, postcode, city, correspondenceAddress, email, password } = req.body;
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
+  if (!username || !password || !email || !firstname || !surname || !city || !district || !correspondenceAddress || !postcode) {
+    return res.status(400).json({ msg: 'Please enter all fields with (*)' });
   }
 
   try {
