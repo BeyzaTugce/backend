@@ -3,17 +3,17 @@
 const OfferModel = require("../models/offer");
 
 const getOfferHistory = (req, res) => {
-    OfferModel.findOne({"purchaseId": req.params.purchaseId})
+    OfferModel.findOne({"purchaseId": req.params.id})
         .then(offers => res.json(offers))
 };
 
 const createBargainOffer = async (req, res) => {
 
     try {
-        var offer = await OfferModel.findOne({"purchaseId": req.params.purchaseId}).exec();
+        var offer = await OfferModel.findOne({"purchaseId": req.params.id}).exec();
         if (!offer) {
             const newOffer = await new OfferModel({
-                purchaseId: req.params.purchaseId,
+                purchaseId: req.params.id,
                 price: req.body.price,
                 offerHistory: [req.body.price],
                 offerStatus: false,
@@ -22,7 +22,7 @@ const createBargainOffer = async (req, res) => {
         }
         else {
             let price = req.body.price;
-            const filter = {"purchaseId": req.params.purchaseId }
+            const filter = {"purchaseId": req.params.id }
             const update = {
                 "price": price,
                 "$push": { "offerHistory": price }}
@@ -40,7 +40,7 @@ const createBargainOffer = async (req, res) => {
 
 const withdrawBargainOffer = async (req, res) => {
     try {
-        const offer = await OfferModel.findOne({"purchaseId": req.params.purchaseId});
+        const offer = await OfferModel.findOne({"purchaseId": req.params.id});
         if(offer.remove()) {
             return res.status(201).json({ success: true });
         }
