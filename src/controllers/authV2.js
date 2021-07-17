@@ -122,6 +122,16 @@ const user = async (req, res) => {
   }
 };
 
+const buyerseller = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id).select('-password');
+    if (!user) throw Error('User does not exist');
+    res.json(user);
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
+};
+
 // const logout = (req, res) => {
 //   res.status(200).json({ token: null });
 // };
@@ -129,6 +139,6 @@ const user = async (req, res) => {
 module.exports = {
   login,
   register,
-  // logout,
+  buyerseller,
   user
 };
