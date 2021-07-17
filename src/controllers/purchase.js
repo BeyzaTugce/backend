@@ -44,6 +44,7 @@ const readPurchase = async (req, res) => {
 
 
 const updatePurchase = async (req, res) => {
+    
     // check if the body of the request contains all necessary properties
     if (Object.keys(req.body).length === 0) {
         return res.status(400).json({
@@ -54,9 +55,10 @@ const updatePurchase = async (req, res) => {
 
     // handle the request
     try {
+        //console.log( "dsa"+ req.body._id);
         // find and update garage with id
         let purchase = await PurchaseModel.findByIdAndUpdate(
-            req.params.id,
+            req.body._id,
             req.body,
             {
                 new: true,
