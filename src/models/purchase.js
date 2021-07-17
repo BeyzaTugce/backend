@@ -22,7 +22,7 @@ const PurchaseSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Garage"
     },
-
+  
     //enum_offer: ["Accepted", "Rejected", "NewOffer"],
     price: Number,
     purchaseStatus: {
@@ -33,7 +33,23 @@ const PurchaseSchema = mongoose.Schema({
     selectedItemList: {
             type: ["Item"],
             required: true,
-    }
+    },
+    method: {
+        type: ["Delivery", "Pick-Up"],
+        default: "",
+    },
+    pickUpDate: {
+        type: Date,
+        default: "",
+    },
+    shipAddress: {
+        type: String,
+        default: "",
+    },
+    pickUpAddress: {
+        type: String,
+        default: "",
+    },
 });
 
 module.exports = mongoose.model("Purchase", PurchaseSchema);

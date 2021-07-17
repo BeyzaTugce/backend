@@ -3,7 +3,11 @@
 const mongoose = require("mongoose");
 
 const PickupSchema = mongoose.Schema({
-   // orderId: Number,
+    /*purchaseId: {
+        type: String,
+        required: true,
+        unique: true,
+    },*/
     availableDates: [Date],
     pickupLocation: String,
 });

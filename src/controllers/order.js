@@ -128,7 +128,7 @@ const readItems = async (req, res) => {
     }
 };
 
-const readSeller = async (req, res) => {
+/*const readSeller = async (req, res) => {
     try {
         let order = await OrderModel.findById(req.params.id);
         let seller = await UserModel.findById(order.seller);
@@ -145,7 +145,7 @@ const readSeller = async (req, res) => {
             message: err.message,
         });
     }
-};
+};*/
 
 const readOrderByUser = async (req, res) => {
     try {
@@ -180,6 +180,6 @@ module.exports = {
     deleteOrder,
     listOrders,
     readItems,
-    readSeller,
+   // readSeller,
     readOrderByUser
 };

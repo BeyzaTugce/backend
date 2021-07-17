@@ -55,7 +55,7 @@ const updatePurchase = async (req, res) => {
 
     // handle the request
     try {
-        //console.log( "dsa"+ req.body._id);
+      
         // find and update garage with id
         let purchase = await PurchaseModel.findByIdAndUpdate(
             req.body._id,
@@ -67,6 +67,7 @@ const updatePurchase = async (req, res) => {
         ).exec();
 
         // return updated movie
+        
         return res.status(200).json(purchase);
     } catch (err) {
         console.log(err);

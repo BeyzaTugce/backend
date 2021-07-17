@@ -7,18 +7,21 @@ const OrderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    method: {
-        type: ["Delivery", "Pick-Up"],
+   /* method: {
+        type: String,
+        enum:  ["Delivery", "Pick-Up"],
+        default: "",
     },
     shipDate: Date,
     pickUpDate: Date,
     shipAddress: String,
-    pickUpAddress: String,
+    pickUpAddress: String,*/
     enum: {
-        type: ["New", "Hold", "Shipped", "Delivered", "Closed"],
-        default: "New"
+        type: String,
+        enum:  ["New", "Hold", "Shipped", "Delivered", "Closed"],
+        default: "New",
     },
-    total: Number,
+    //total: Number,
     brokerageFee: Number,
 });
 
