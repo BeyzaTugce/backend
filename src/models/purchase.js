@@ -46,10 +46,8 @@ const PurchaseSchema = mongoose.Schema({
         type: String,
         default: "",
     },
-    pickUpAddress: {
-        type: String,
-        default: "",
-    },
+    availableDates: [Date],
+    pickupLocation: String,
 });
 
 module.exports = mongoose.model("Purchase", PurchaseSchema);
