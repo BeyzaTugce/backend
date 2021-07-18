@@ -94,7 +94,7 @@ const deleteItem = async (req, res) => {
 const listItems = async (req, res) => {
     try{
         let items = await ItemModel.find({}).exec();
-        return res.status(200).json(items);
+        return res.status(200).json({items : items});
     } catch (err){
         console.log(err);
         return res.status(500).json({
