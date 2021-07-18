@@ -27,7 +27,7 @@ const PurchaseSchema = mongoose.Schema({
     price: Number,
     purchaseStatus: {
         type: String,
-        enum: ["WaitForAcceptance", "DeliveryScheduling", "Payment", "Rating", "Closed"],
+        enum: ["WaitForAcceptance", "DeliveryScheduling", "Payment","Order", "Rating", "Closed"],
         default: "WaitForAcceptance",
     },
     selectedItemList: {
@@ -35,7 +35,8 @@ const PurchaseSchema = mongoose.Schema({
             required: true,
     },
     method: {
-        type: ["Delivery", "Pick-Up"],
+        type: String,
+        enum: ["Shipment", "PickUp", "Both"],
         default: "",
     },
     pickUpDate: Date,
