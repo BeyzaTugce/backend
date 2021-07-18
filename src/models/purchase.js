@@ -38,10 +38,7 @@ const PurchaseSchema = mongoose.Schema({
         type: ["Delivery", "Pick-Up"],
         default: "",
     },
-    pickUpDate: {
-        type: Date,
-        default: "",
-    },
+    pickUpDate: Date,
     shipAddress: {
         type: String,
         default: "",
