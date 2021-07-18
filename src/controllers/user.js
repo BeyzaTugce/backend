@@ -84,6 +84,46 @@ const listUsers = async (req, res) => {
     }
 }
 
+const readSeller = async (req, res) => {
+    try {
+        let user = await UserModel.findById(req.params.id).exec();
+
+        if (!user)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `User not found`,
+            });
+
+        return res.status(200).json(user);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal Server Error",
+            message: err.message,
+        });
+    }
+};
+
+const readBuyer = async (req, res) => {
+    try {
+        let user = await UserModel.findById(req.params.id).exec();
+
+        if (!user)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `User not found`,
+            });
+
+        return res.status(200).json(user);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal Server Error",
+            message: err.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -91,4 +131,6 @@ module.exports = {
     updateUser,
     deleteUser,
     listUsers,
+    readSeller,
+    readBuyer,
 };
