@@ -1,6 +1,7 @@
 "use strict";
 
 const PurchaseModel = require("../models/purchase");
+const UserModel = require("../models/user");
 
 
 const createPurchase = async (req, res) => {
@@ -107,6 +108,44 @@ const listPurchases = async (req, res) => {
     }
 };
 
+const readSeller = async (req, res) => {
+    try {
+        let purchase = await PurchaseModel.findById(req.params.id);
+        let seller = await UserModel.findById(purchase.seller);
+        if (!seller)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Seller not found`,
+            });
+        return res.status(200).json(seller);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
+const readBuyer = async (req, res) => {
+    try {
+        let purchase = await PurchaseModel.findById(req.params.id);
+        let buyer = await UserModel.findById(purchase.buyer);
+        if (!buyer)
+            return res.status(404).json({
+                error: "Not Found",
+                message: `Buyer not found`,
+            });
+        return res.status(200).json(buyer);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: err.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -115,4 +154,6 @@ module.exports = {
     updatePurchase,
     deletePurchase,
     listPurchases,
+    readSeller,
+    readBuyer,
 };
