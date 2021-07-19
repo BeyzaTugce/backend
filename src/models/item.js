@@ -7,6 +7,9 @@ const ItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Garage"
     },
+    username: {
+        type: String,
+    },
     name: {
         type: String,
         required: true,
