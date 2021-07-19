@@ -13,7 +13,6 @@ const getOfferHistory = async (req, res) => {
   try {
    // console.log("purchaseId" + req.params.id);
     let offer = await OfferModel.findOne({ purchaseId: req.params.id }).exec();
-    console.log("deneme" + offer);
     if (!offer)
       return res.status(404).json({
         error: "Not Found",

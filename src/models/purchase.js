@@ -40,10 +40,8 @@ const PurchaseSchema = mongoose.Schema({
         default: "",
     },
     pickUpDate: Date,
-    shipAddress: {
-        type: String,
-        default: "",
-    },
+    shipAddress: String,
+
     availableDates: [Date],
     pickupLocation: String,
 });
