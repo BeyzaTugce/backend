@@ -44,6 +44,8 @@ const PurchaseSchema = mongoose.Schema({
 
     availableDates: [Date],
     pickupLocation: String,
+    rating: Number,
+    ratingComment: String
 });
 
 module.exports = mongoose.model("Purchase", PurchaseSchema);
