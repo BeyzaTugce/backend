@@ -56,7 +56,7 @@ const UserSchema = new mongoose.Schema({
     birthdate: Date,
     avgRating: {
         type: Number,
-        default: 0,
+        default: 2.5,
     }
 });
 
