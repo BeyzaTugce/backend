@@ -14,6 +14,8 @@ api.set('port', config.port);
 const server = http.createServer(api);
 //TODO
 mongoose.set('useUnifiedTopology', true);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useCreateIndex', true);
 //Connect to the MongoDB database; then start the server
 mongoose
     .connect(config.mongoURI)
