@@ -41,9 +41,11 @@ const PurchaseSchema = mongoose.Schema({
     },
     pickUpDate: Date,
     shipAddress: String,
-
     availableDates: [Date],
-    pickupLocation: String,
+    pickupLocation: {
+        type: String,
+        default: "",
+    },
     rating: Number,
     ratingComment: String
 });
