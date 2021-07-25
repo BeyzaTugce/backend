@@ -7,6 +7,11 @@ const ItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Garage"
     },
+    deadline: {
+        type: Date,
+        default: Date.now,
+        required: true,
+    },
     username: {
         type: String,
     },
