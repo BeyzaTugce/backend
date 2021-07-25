@@ -16,6 +16,7 @@ router.get("/item/:id", garageController.readItems); //get items in a garage
 router.get("/seller/:id", garageController.readSeller); //get the user of the garage
 router.get("/:id", garageController.readGarage);
 router.get("/user", garageController.readGarageByUser);
+router.delete("/:id", garageController.deleteGarage); // remove a Item
 
 
 module.exports = router;
