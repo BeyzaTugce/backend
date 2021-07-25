@@ -42,6 +42,11 @@ const login = async (req, res) => {
         postcode: user.postcode,
         city: user.city,
         correspondenceAddress: user.correspondenceAddress,
+        role: user.role,
+        billingAddress: user.billingAddress,
+        creditCardInfo: user.creditCardInfo,
+        balance: user.balance,
+        avgRating: user.avgRating
       }
     });
     
