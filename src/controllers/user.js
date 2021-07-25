@@ -74,7 +74,7 @@ const deleteUser = async (req, res) => {
 const listUsers = async (req, res) => {
     try{
         let users = await UserModel.find({}).exec();
-        return res.status(200).json(users);
+        return res.status(200).json({ users: users });
     } catch (err){
         console.log(err);
         return res.status(500).json({
