@@ -1,17 +1,9 @@
 "use strict";
 
 const OfferModel = require("../models/offer");
-/*
-const getOfferHistory = (req, res) => {
-    console.log("purchaseId"+ req.params);
-    OfferModel.findOne({"purchaseId": req.params.id})
-        .then(offers => res.json(offers))
-};
-*/
 
 const getOfferHistory = async (req, res) => {
   try {
-   // console.log("purchaseId" + req.params.id);
     let offer = await OfferModel.findOne({ purchaseId: req.params.id }).exec();
     if (!offer)
       return res.status(404).json({
@@ -29,52 +21,13 @@ const getOfferHistory = async (req, res) => {
   }
 };
 
-/*
 
-const createBargainOffer = async (req, res) => {
-
-    try {
-       // console.log("purchaseId"+ req.params.id);
-        var offer = await OfferModel.findOne({"purchaseId": req.params.id}).exec();
-        if (!offer) {
-            const newOffer = await new OfferModel({
-                purchaseId: req.params.id,
-                price: req.body.price,
-                offerHistory: [req.body.price],
-                offerStatus: false,
-            });
-            try { newOffer.save().then(offer => res.json(offer)); } 
-            catch (err) 
-            {return res.status(500).json({
-                error: "Save Error",
-                message: err.message,
-            });
-        }
-        }
-        else {
-            let price = req.body.price;
-            const filter = {"purchaseId": req.params.id }
-            const update = {
-                "price": price,
-                "$push": { "offerHistory": price }}
-            await OfferModel.findOneAndUpdate(filter, update)
-        }
-        return res.status(201).json(offer);
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({
-            error: "Internal Server Error",
-            message: err.message,
-        });
-    }
-};*/
 const createBargainOffer = async (req, res) => {
   try {
 
     var offer = await OfferModel.findOne({ purchaseId: req.params.id }).exec();
     try {
       if (!offer) {
-       console.log("sadas");
         try {
             const newOffer = await new OfferModel({
                 purchaseId: req.params.id,

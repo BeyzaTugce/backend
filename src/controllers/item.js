@@ -44,17 +44,13 @@ const readItem = async (req, res) => {
 
 
 const updateItem = async (req, res) => {
-    // check if the body of the request contains all necessary properties
     if (Object.keys(req.body).length === 0) {
         return res.status(400).json({
             error: "Bad Request",
             message: "The request body is empty",
         });
     }
-
-    // handle the request
     try {
-        // find and update item with id
         let item = await ItemModel.findByIdAndUpdate(
             req.params.id,
             req.body,
@@ -63,8 +59,6 @@ const updateItem = async (req, res) => {
                 runValidators: true,
             }
         ).exec();
-
-        // return updated movie
         return res.status(200).json(item);
     } catch (err) {
         console.log(err);
@@ -77,7 +71,6 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async (req, res) => {
     try {
-        // find and remove item
         await ItemModel.findByIdAndRemove(req.params.id).exec();
         return res
             .status(200)
@@ -104,48 +97,6 @@ const listItems = async (req, res) => {
     }
 }
 
-const search = async (req, res) => {
-    const name = req.query.name;
-    const nameRegex = new RegExp(name, 'g');
-    const items = await ItemModel.find({
-        $or: [
-            {name: nameRegex},
-            {type: nameRegex}
-        ], status: "hasapproved"
-    }, {name: 1, info: 1, tags: 1, price: 1, image: 1, garageId: 1});
-    res.status(200).json(items);
-};
-
-const filter = async (req, res) => {
-    const {
-        itemIds,
-        rating,
-        price,
-    } = req.body;
-
-    const mapPriceRange = (price) => {
-        if (price === '0') {
-            return {price: {"$lte": 24, "$gte": 0}};
-        } else if (price === '25') {
-            return {price: {"$lte": 49, "$gte": 25}};
-        } else if (price === '50') {
-            return {price: {"$lte": 74, "$gte": 50}};
-        } else if (price === '75') {
-            return {price: {"$lte": 100, "$gte": 75}};
-        }
-    }
-
-    const query = {};
-    if (itemIds.length !== 0) query._id = {$in: itemIds};
-    if (price.length !== 0) query.$or = price.map(mapPriceRange);
-    if (rating.length !== 0) query.rating = {$in: rating};
-    query.status = 'hasapproved';
-    const item = await itemModel.find(query, {
-        name: 1, info: 1, tags: 1, price: 1, image: 1, garageId: 1
-    });
-
-    res.status(200).json(item);
-};
 
 
 module.exports = {
@@ -154,6 +105,4 @@ module.exports = {
     updateItem,
     deleteItem,
     listItems,
-    search,
-    filter,
 };
