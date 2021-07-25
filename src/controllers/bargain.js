@@ -74,7 +74,6 @@ const createBargainOffer = async (req, res) => {
     var offer = await OfferModel.findOne({ purchaseId: req.params.id }).exec();
     try {
       if (!offer) {
-       console.log("sadas");
         try {
             const newOffer = await new OfferModel({
                 purchaseId: req.params.id,
