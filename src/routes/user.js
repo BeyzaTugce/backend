@@ -10,13 +10,7 @@ router.get("/", userController.listUsers); // List all users
 router.get("/:id", userController.readUser); // Read a user by Id
 router.get("/buyer/:id", userController.readBuyer); // Read a user by Id
 router.get("/seller/:id", userController.readSeller); // Read a user by Id
-
-
-router.put(
-    "/:id",
-    middlewares.checkAuthentication,
-    userController.updateUser
-); // Update a user by Id, needs logged in user
+router.put("/:id", userController.updateUser); // update a Item
 router.delete(
     "/:id",
     middlewares.checkAuthentication,
