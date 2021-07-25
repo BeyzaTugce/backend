@@ -104,7 +104,6 @@ const readItems = async (req, res) => {
     try {
         let garage = await GarageModel.findById(req.params.id);
         let items = await ItemModel.find({"garageId": garage.id}).exec();
-        //console.log("ITEMS in controller:"+items);
 
         if (!items)
             return res.status(404).json({
@@ -145,11 +144,7 @@ const readGarageByUser = async (req, res) => {
     try {
         let loggedInUser = await UserModel.findById(req.userId); //.select("garageId").exec();
         let garage = await GarageModel.find({user : loggedInUser._id});
-        console.log(garage);
-        console.log(loggedInUser);
 
-
-        //let seller = await UserModel.findById(garage.user);
         if (!garage)
             return res.status(404).json({
                 error: "Not Found",
@@ -164,7 +159,6 @@ const readGarageByUser = async (req, res) => {
         });
     }
 };
-
 
 
 

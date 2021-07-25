@@ -8,9 +8,9 @@ const middlewares = require("../middlewares");
 
 router.get("/", userController.listUsers); // List all users
 router.get("/:id", userController.readUser); // Read a user by Id
-router.get("/buyer/:id", userController.readBuyer); // Read a user by Id
-router.get("/seller/:id", userController.readSeller); // Read a user by Id
-router.put("/:id", userController.updateUser); // update a Item
+router.get("/buyer/:id", userController.readBuyer); // Read a buyer by Id
+router.get("/seller/:id", userController.readSeller); // Read a seller by Id
+router.put("/:id", userController.updateUser); // update a user
 router.delete(
     "/:id",
     middlewares.checkAuthentication,

@@ -24,17 +24,13 @@ const readUser = async (req, res) => {
 
 
 const updateUser = async (req, res) => {
-    // check if the body of the request contains all necessary properties
     if (Object.keys(req.body).length === 0) {
         return res.status(400).json({
             error: "Bad Request",
             message: "The request body is empty",
         });
     }
-
-    // handle the request
     try {
-        // find and update garage with id
         let user = await UserModel.findByIdAndUpdate(
             req.params.id,
             req.body,
@@ -43,8 +39,6 @@ const updateUser = async (req, res) => {
                 runValidators: true,
             }
         ).exec();
-
-        // return updated movie
         return res.status(200).json(user);
     } catch (err) {
         console.log(err);
@@ -57,7 +51,6 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        // find and remove garage
         await UserModel.findByIdAndRemove(req.params.id).exec();
         return res
             .status(200)
@@ -74,7 +67,7 @@ const deleteUser = async (req, res) => {
 const listUsers = async (req, res) => {
     try{
         let users = await UserModel.find({}).exec();
-        return res.status(200).json(users);
+        return res.status(200).json({ users: users });
     } catch (err){
         console.log(err);
         return res.status(500).json({

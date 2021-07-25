@@ -12,7 +12,7 @@ api.set('port', config.port);
 
 //Create a http server based on Express
 const server = http.createServer(api);
-//TODO
+
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useCreateIndex', true);
